@@ -12,3 +12,5 @@ export class AppComponent {
   title = 'ECommerceClient';
   constructor(private toastr: CustomToastrService) {}
 }
+
+$.get("https://localhost:7203/api/Product", data => {console.log((data));})
