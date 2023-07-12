@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerName } from 'src/app/base/base.component';
+import { Create_Product } from 'src/app/contracts/create_product';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
+import { ListComponent } from './list/list.component';
 
 @Component({
   selector: 'app-products',
@@ -13,32 +15,9 @@ export class ProductsComponent extends BaseComponent implements OnInit{
   constructor(spinner: NgxSpinnerService, private httpClientService: HttpClientService){
     super(spinner);
   }
-  ngOnInit(): void {
-    this.showSpinner(SpinnerName.Timer);
-
-    // CREATE
-    // this.httpClientService.post({controller: "product"},{
-    //   name: "Kalem",
-    //   stock: 100,
-    //   price: 15
-    // }).subscribe();
-
-    // UPDATE
-    // this.httpClientService.put({controller: "product", }, {
-    //   id: "940790fe-6f0d-485c-98b2-10601811038b",
-    //   name: "Renkli Kağıt",
-    //   stock: 123,
-    //   price: 44
-    // }).subscribe();
-
-    // DELETE
-    // this.httpClientService.delete({controller: "product"}, "940790fe-6f0d-485c-98b2-10601811038a").subscribe();
-
-    // this.httpClientService.get({
-    //   baseUrl: "https://jsonplaceholder.typicode.com",
-    //   controller: "posts"
-    // }).subscribe(data => console.log(data));
-    
-  }
-
+  ngOnInit(): void { }
+  @ViewChild(ListComponent) listComponents : ListComponent;
+  createdProduct(createProduct: Create_Product){
+    this.listComponents.getProducts();
+  };
 }
