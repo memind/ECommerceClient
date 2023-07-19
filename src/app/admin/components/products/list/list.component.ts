@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerName } from 'src/app/base/base.component';
-import { List_Product } from 'src/app/contracts/list_product';
+import { List_Product } from 'src/app/contracts/products/list_product';
 import { SelectProductImageDialogComponent } from '../../../../dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyService, MessagePosition, MessageType } from 'src/app/services/admin/alertify.service';
 import { DialogService } from '../../../../services/common/dialog.service';

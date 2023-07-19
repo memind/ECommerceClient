@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <br />
+      <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)">
+        <div class="form-group">
+          <label for="nameSurname">Full Name</label>
+          <input type="text" formControlName="nameSurname" class="form-control" id="nameSurname" placeholder="Enter Your Full name" [ngClass]="{'is-invalid': submitted && component.nameSurname.errors}">
+          <small class="form-text text-muted invalid-feedback" *ngIf="submitted && component.nameSurname.errors?.required">This field is required!</small>
+          <small class="form-text text-muted invalid-feedback" *ngIf="submitted && (component.nameSurname.errors?.maxlength || component.nameSurname.errors?.minlength)">Full name can be between 3-50 characters</small>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" formControlName="username" class="form-control" id="username" [ngClass]="{'is-invalid': submitted && component.username.errors}" placeholder="Enter Your Username">
+          <small class="form-text text-muted invalid-feedback" *ngIf="submitted && component.username.errors?.required">This field is required!</small>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" formControlName="email" class="form-control" id="email" placeholder="Enter Your Email" [ngClass]="{'is-invalid': submitted && component.email.errors}">
+          <small class="form-text text-muted invalid-feedback" *ngIf="submitted && component.email.errors?.required">This field is required!</small>
+          <small class="form-text text-muted invalid-feedback" *ngIf="submitted && component.email.errors?.email">Enter your email correct!</small>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" formControlName="password" class="form-control" id="password" placeholder="Enter your Password" [ngClass]="{'is-invalid': submitted && component.password.errors}">
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Your Password</label>
+          <input type="password" formControlName="confirmPassword" class="form-control" id="confirmPassword" placeholder="Enter Your Password Again" [ngClass]="{'is-invalid': submitted && component.confirmPassword.errors}">
+          <small *ngIf="submitted && frm.hasError('notSame')">Passwords are not matching!</small>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Register</button>
+      </form>
+  
+    </div>
+    <div class="col-md-1"></div>
+  </div>

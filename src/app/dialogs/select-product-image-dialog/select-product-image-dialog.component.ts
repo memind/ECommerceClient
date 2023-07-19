@@ -7,7 +7,7 @@ import { SpinnerName } from 'src/app/base/base.component';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { List_Product_Image } from 'src/app/contracts/list-product-image';
+import { List_Product_Image } from 'src/app/contracts/products/list-product-image';
 declare var $: any
 
 @Component({
