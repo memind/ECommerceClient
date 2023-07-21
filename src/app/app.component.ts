@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from './services/common/auth.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 
 declare var $: any
@@ -10,5 +12,17 @@ declare var $: any
 })
 export class AppComponent {
   title = 'ECommerceClient';
-  constructor(private toastr: CustomToastrService) {}
+  constructor(public authService: AuthService, private toastrService: CustomToastrService, private router: Router) {
+    authService.identityCheck();
+  }
+
+  signOut() {
+    localStorage.removeItem("accessToken");
+    this.authService.identityCheck();
+    this.router.navigate([""]);
+    this.toastrService.message("You are logged out!", "Logged Out", {
+      messageType: ToastrMessageType.Warning,
+      position: ToastrPosition.TopRight
+    });
+  }
 }
