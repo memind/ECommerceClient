@@ -24,6 +24,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       })
     });
   }
+  
   m(){
     this.alertify.message("Merhaba", {
       messageType: MessageType.Success,
