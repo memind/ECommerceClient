@@ -15,6 +15,9 @@ import { RegisterModule } from './register/register.module';
     ProductsModule,
     RegisterModule
     // LoginModule
+  ],
+  exports: [
+    BasketsModule
   ]
 })
 export class ComponentsModule { }
