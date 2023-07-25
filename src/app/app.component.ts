@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './services/common/auth.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
+import { ComponentType, DynamicLoadComponentService } from './services/common/dynamic-load-component.service';
+import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 
 declare var $: any
 
@@ -12,9 +14,10 @@ declare var $: any
 })
 export class AppComponent {
   title = 'ECommerceClient';
-  constructor(public authService: AuthService, private toastrService: CustomToastrService, private router: Router) {
-    authService.identityCheck();
-  }
+  @ViewChild(DynamicLoadComponentDirective, { static: true })
+  dynamicLoadComponentDirective: DynamicLoadComponentDirective;
+
+  constructor(public authService: AuthService, private toastrService: CustomToastrService, private router: Router, private dynamicLoadComponentService: DynamicLoadComponentService) { }
 
   signOut() {
     localStorage.removeItem("accessToken");
@@ -24,5 +27,8 @@ export class AppComponent {
       messageType: ToastrMessageType.Warning,
       position: ToastrPosition.TopRight
     });
+  }
+  loadComponent() {
+    this.dynamicLoadComponentService.loadComponent(ComponentType.BasketsComponent, this.dynamicLoadComponentDirective.viewContainerRef);
   }
 }
