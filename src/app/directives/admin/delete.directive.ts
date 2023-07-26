@@ -1,32 +1,17 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  Output,
-  Renderer2,
-} from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Output, Renderer2 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { SpinnerName } from 'src/app/base/base.component';
-import {
-  DeleteDialogComponent,
-  DeleteState,
-} from 'src/app/dialogs/delete-dialog/delete-dialog.component';
-import {
-  AlertifyService,
-  MessagePosition,
-  MessageType,
-} from 'src/app/services/admin/alertify.service';
-import { DialogService } from 'src/app/services/common/dialog.service';
-import { HttpClientService } from 'src/app/services/common/http-client.service';
-
+import { BaseComponent, SpinnerName } from '../../base/base.component';
+import { DeleteDialogComponent, DeleteState } from '../../dialogs/delete-dialog/delete-dialog.component';
+import { AlertifyService, MessageType, MessagePosition } from '../../services/admin/alertify.service';
+import { DialogService } from '../../services/common/dialog.service';
+import { HttpClientService } from '../../services/common/http-client.service';
+import { ProductService } from '../../services/common/models/product.service';
 declare var $: any;
-
 @Directive({
-  selector: '[appDelete]',
+  selector: '[appDelete]'
 })
 export class DeleteDirective {
   constructor(
@@ -38,78 +23,53 @@ export class DeleteDirective {
     private alertifyService: AlertifyService,
     private dialogService: DialogService
   ) {
-    const img = _renderer.createElement('img');
-    img.setAttribute('src', '../../../../../assets/delete.png');
-    img.setAttribute('style', 'cursor: pointer;');
+    const img = _renderer.createElement("img");
+    img.setAttribute("src", "../../../../../assets/delete.png");
+    img.setAttribute("style", "cursor: pointer;");
     img.width = 25;
     img.height = 25;
-
     _renderer.appendChild(element.nativeElement, img);
   }
-
   @Input() id: string;
   @Input() controller: string;
-  @Output() callbackOnDelete: EventEmitter<any> = new EventEmitter();
-
-  @HostListener('click')
-  async onClick() {
+  @Output() callback: EventEmitter<any> = new EventEmitter();
+  @HostListener("click")
+  async onclick() {
     this.dialogService.openDialog({
       componentType: DeleteDialogComponent,
       data: DeleteState.Yes,
       afterClosed: async () => {
-        this.spinner.show(SpinnerName.LineSpinClockwiseFadeRotating);
+        this.spinner.show(SpinnerName.BallAtom);
         const td: HTMLTableCellElement = this.element.nativeElement;
-        this.httpClientService
-          .delete(
-            {
-              controller: this.controller,
-            },
-            this.id
-          )
-          .subscribe(
-            (date) => {
-              $(td.parentElement).animate(
-                {
-                  opacity: 0,
-                  left: '+=50',
-                  height: 'toogle',
-                },
-                700,
-                () => {
-                  this.callbackOnDelete.emit();
-                  this.spinner.hide(SpinnerName.LineSpinClockwiseFadeRotating, 2000);
-                  this.alertifyService.message('Product deleted successfully!', {
-                    dismissOthers: true,
-                    messageType: MessageType.Success,
-                    position: MessagePosition.TopRight,
-                  });
-                }
-              );
-            },
-            (errorResponse: HttpErrorResponse) => {
-              this.callbackOnDelete.emit();
-              this.spinner.hide(SpinnerName.LineSpinClockwiseFadeRotating, 2000);
-              this.alertifyService.message('An error occured!', {
-                dismissOthers: true,
-                messageType: MessageType.Error,
-                position: MessagePosition.TopRight,
-              });
-            }
-          );
+        this.httpClientService.delete({
+          controller: this.controller
+        }, this.id).subscribe(data => {
+          $(td.parentElement).animate({
+            opacity: 0,
+            left: "+=50",
+            height: "toogle"
+          }, 700, () => {
+            this.callback.emit();
+            this.alertifyService.message(`${this.controller == 'roles' ? 'Role' : 'Product'} has been deleted successfuly.`, {
+              dismissOthers: true,
+              messageType: MessageType.Success,
+              position: MessagePosition.TopRight
+            })
+          });
+        }, (errorResponse: HttpErrorResponse) => {
+          this.spinner.hide(SpinnerName.BallAtom);
+          this.alertifyService.message("An unexpected error occured while deleting product.", {
+            dismissOthers: true,
+            messageType: MessageType.Error,
+            position: MessagePosition.TopRight
+          });
+        });
       }
     });
   }
-
-  // openDialog(afterClose: any): void {
-  //   const dialogRef = this.dialog.open(DeleteDialogComponent, {
-  //     width: '250px',
-  //     data: DeleteState.Yes,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result == DeleteState.Yes) {
-  //       afterClose();
-  //     }
-  //   });
-  // }
+  //openDialog(afterClosed: any): void {
+  //  const dialogRef = this.dialog.open(DeleteDialogComponent, {
+  //    width: '250px',
+  //    data: DeleteState.Yes,
+  //  });
 }

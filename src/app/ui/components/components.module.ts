@@ -4,17 +4,24 @@ import { BasketsModule } from './baskets/baskets.module';
 import { HomeModule } from './home/home.module';
 import { ProductsModule } from './products/products.module';
 import { RegisterModule } from './register/register.module';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { PasswordResetModule } from './password-reset/password-reset.module';
+import { UpdatePasswordModule } from './update-password/update-password.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     BasketsModule,
     HomeModule,
     ProductsModule,
-    RegisterModule
+    RegisterModule,
     // LoginModule
+    PasswordResetModule,
+    UpdatePasswordModule
   ],
   exports: [
     BasketsModule

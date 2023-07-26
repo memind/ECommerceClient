@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Assigning roles to {{data.name}} endpoint</h1>
+<div mat-dialog-content>
+  <p>You can assign the roles below to the relevant page.</p>
+</div>
+
+<div   matBadge="4" matBadgeOverlap="false"></div>
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Yes</button>
+</div>

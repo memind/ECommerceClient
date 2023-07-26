@@ -4,7 +4,7 @@ import { BaseComponent, SpinnerName } from 'src/app/base/base.component';
 import { List_Basket_Item } from '../../../contracts/basket/list_basket_item';
 import { Update_Basket_Item } from '../../../contracts/basket/update_basket_item';
 import { BasketService } from '../../../services/common/models/basket.service';
-import { OrderService } from 'src/app/services/common/order.service';
+import { OrderService } from 'src/app/services/common/models/order.service';
 import {
   CustomToastrService,
   ToastrMessageType,
