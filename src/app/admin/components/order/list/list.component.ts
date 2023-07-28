@@ -31,11 +31,13 @@ export class ListComponent extends BaseComponent implements OnInit {
   async getOrders() {
     this.showSpinner(SpinnerName.BallAtom);
 
-    const allOrders: { totalOrderCount: number; orders: List_Order[] } = await this.orderService.getAllOrders(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerName.BallAtom), errorMessage => this.alertifyService.message(errorMessage, {
-      dismissOthers: true,
-      messageType: MessageType.Error,
-      position: MessagePosition.TopRight
-    }))
+    const allOrders: { totalOrderCount: number; orders: List_Order[] } = await this.orderService.getAllOrders(this.paginator ? this.paginator.pageIndex : 0, this.paginator ? this.paginator.pageSize : 5, () => this.hideSpinner(SpinnerName.BallAtom), (errorMessage: any) => {
+      this.alertifyService.message(errorMessage.message, {
+        dismissOthers: true,
+        messageType: MessageType.Error,
+        position: MessagePosition.TopRight
+      });
+    })
     this.dataSource = new MatTableDataSource<List_Order>(allOrders.orders);
     this.paginator.length = allOrders.totalOrderCount;
   }

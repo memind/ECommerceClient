@@ -95,7 +95,7 @@ export class ProductService {
     const deleteObservable = this.httpClientService.delete(
       {
         action: 'deleteproductimage',
-        controller: 'products',
+        controller: 'product',
         queryString: `imageId=${imageId}`,
       },
       id
@@ -106,11 +106,23 @@ export class ProductService {
 
   async changeShowcaseImage(imageId: string, productId: string, successCallBack?: () => void): Promise<void> {
     const changeShowcaseImageObservable = this.httpClientService.get({
-      controller: "products",
+      controller: "product",
       action: "ChangeShowcaseImage",
       queryString: `imageId=${imageId}&productId=${productId}`
     });
     await firstValueFrom(changeShowcaseImageObservable);
+    successCallBack();
+  }
+
+  async updateStockQrCodeToProduct(productId: string, stock: number, successCallBack?: () => void) {
+    const observable = this.httpClientService.put({
+      action: "qrcode",
+      controller: "product"
+    }, {
+      productId, stock
+    });
+
+    await firstValueFrom(observable);
     successCallBack();
   }
 }

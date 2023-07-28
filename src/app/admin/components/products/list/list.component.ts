@@ -8,6 +8,7 @@ import { SelectProductImageDialogComponent } from '../../../../dialogs/select-pr
 import { AlertifyService, MessagePosition, MessageType } from 'src/app/services/admin/alertify.service';
 import { DialogService } from '../../../../services/common/dialog.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
+import { QrcodeDialogComponent } from 'src/app/dialogs/qrcode-dialog/qrcode-dialog.component';
 
 declare var $: any;
 
@@ -23,7 +24,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     super(spinner)
   }
 
-  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updatedDate', 'photos','edit', 'delete'];
+  displayedColumns: string[] = ['name', 'stock', 'price', 'createdDate', 'updatedDate', 'qrcode','photos','edit', 'delete'];
   dataSource : MatTableDataSource<List_Product> = null;
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -55,5 +56,13 @@ export class ListComponent extends BaseComponent implements OnInit {
 
   async ngOnInit() {
     await this.getProducts();
+  }
+
+  showQRCode(productId: string) {
+    this.dialogService.openDialog({
+      componentType: QrcodeDialogComponent,
+      data: productId,
+      afterClosed: () => { }
+    })
   }
 }

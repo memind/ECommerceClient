@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SingleOrder } from '../../contracts/order/single_order';
-import { OrderService } from '../../services/common/models/order.service';
-import { BaseDialog } from '../base/base-dialog';
-import { DialogService } from 'src/app/services/common/dialog.service';
-import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerName } from '../../base/base.component';
+import { SingleOrder } from '../../contracts/order/single_order';
+import { DialogService } from '../../services/common/dialog.service';
+import { OrderService } from '../../services/common/models/order.service';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../services/ui/custom-toastr.service';
+import { BaseDialog } from '../base/base-dialog';
 import { CompleteOrderDialogComponent, CompleteOrderState } from '../complete-order-dialog/complete-order-dialog.component';
-import { SpinnerName } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-order-detail-dialog',
@@ -35,9 +35,10 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
 
   async ngOnInit(): Promise<void> {
     this.singleOrder = await this.orderService.getOrderById(this.data as string)
-    this.dataSource = this.singleOrder.basketItems;
-    this.totalPrice = this.singleOrder.basketItems.map((basketItem, index) => basketItem.price * basketItem.quantity).reduce((price, current) => price + current);
     debugger
+    this.dataSource = this.singleOrder.basketItems;
+
+    this.totalPrice = this.singleOrder.basketItems.map((basketItem, index) => basketItem.price * basketItem.quantity).reduce((price, current) => price + current);
   }
 
   completeOrder() {
@@ -56,6 +57,7 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
     });
   }
 }
+
 
 export enum OrderDetailDialogState {
   Close, OrderComplete

@@ -34,12 +34,12 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
                   position: ToastrPosition.BottomFullWidth
                 });
             }
-          }).then(data => {});
-          break;
-        case HttpStatusCode.InternalServerError:
-          this.toastrService.message("Cant access to the server!", "Server Error!", {
-            messageType: ToastrMessageType.Warning,
-            position: ToastrPosition.BottomFullWidth
+          }).then(data => {
+
+            this.toastrService.message("You are not authorized to perform this process!", "Unauthorized Process!", {
+              messageType: ToastrMessageType.Warning,
+              position: ToastrPosition.BottomFullWidth
+            });
           });
           break;
         case HttpStatusCode.BadRequest:

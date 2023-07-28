@@ -6,5 +6,4 @@ export class SingleOrder {
     id: string;
     orderCode: string;
     completed: boolean;
-
   }
